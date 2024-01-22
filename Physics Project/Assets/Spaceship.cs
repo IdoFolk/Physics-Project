@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Spaceship : PhysicsObject
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float speed;
+    private Vector3 _thrustersForce = Vector3.zero;
+
+    public override void Start()
     {
-        
+        base.Start();
+        _forces.Add(_thrustersForce);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _thrustersForce = Vector3.forward * speed;
+        }
     }
 }
