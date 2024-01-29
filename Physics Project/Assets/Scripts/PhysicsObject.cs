@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,16 +9,17 @@ public class PhysicsObject : MonoBehaviour
     public Vector3 Position => transform.position;
 
     private bool _isColliding;
-    protected List<Vector3> _forces = new List<Vector3>();
-    private Vector3 _gravityForce = Vector3.zero;
-    private Vector3 Velocity
+    protected List<Force> _forces = new List<Force>();
+    protected Force _gravityForce = new Force(Vector3.zero);
+    private Force _angularForce = new Force(Vector3.zero);
+    public Vector3 Velocity
     {
         get
         {
             Vector3 velocity = Vector3.zero;
             foreach (var force in _forces)
             {
-                velocity += force;
+                velocity += force.Value;
             }
 
             return velocity;
@@ -36,24 +35,25 @@ public class PhysicsObject : MonoBehaviour
     private void FixedUpdate()
     {
         transform.Translate((Velocity) * Time.fixedDeltaTime);
+        //transform.Rotate(_angularForce.Value * Time.fixedDeltaTime);
     }
 
-    public void ApplyForce(Vector3 force)
+    public void ApplyGravityForce(Vector3 force)
     {
-        //if (!usingGravity) return;
+        if (!usingGravity) return;
         if(_isColliding) return;
-        _gravityForce = force / mass;
+        _gravityForce.Value = force / mass;
         //if (forceDirection.magnitude is <= 0.1f or >= -0.1f) return;
     }
-
-    private void OnCollisionEnter(Collision other)
+    public void ApplyAngularForce(Vector3 force)
     {
-        _isColliding = true;
+        if(_isColliding) return;
+        _angularForce.Value += force;
     }
+}
 
-    private void OnCollisionExit(Collision other)
-    {
-        _isColliding = false;
-
-    }
+public class Force
+{
+    public Vector3 Value;
+    public Force(Vector3 value) => Value = value;
 }

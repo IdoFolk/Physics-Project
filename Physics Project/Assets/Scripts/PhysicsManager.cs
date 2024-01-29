@@ -7,6 +7,7 @@ using UnityEngine;
 public class PhysicsManager : MonoBehaviour
 {
     [SerializeField] private PhysicsObject[] physicsObjects;
+    [SerializeField] private float gravityScale;
     private void OnValidate()
     {
         physicsObjects = FindObjectsByType<PhysicsObject>(FindObjectsInactive.Exclude,FindObjectsSortMode.None);
@@ -20,7 +21,7 @@ public class PhysicsManager : MonoBehaviour
             {
                 if (physicsObject == otherPhysicsObject) continue;
                 
-                physicsObject.ApplyForce(ApplyForceBetweenBodies(physicsObject, otherPhysicsObject));
+                physicsObject.ApplyGravityForce(ApplyForceBetweenBodies(physicsObject, otherPhysicsObject));
             }
         }
     }
@@ -30,6 +31,6 @@ public class PhysicsManager : MonoBehaviour
         var massProduct = physicsObject1.Mass * physicsObject2.Mass;
         var distance = Vector3.Distance(physicsObject1.Position, physicsObject2.Position);
         var direction = physicsObject2.Position - physicsObject1.Position;
-        return (massProduct / (distance * distance)) * direction;
+        return (massProduct / (distance * distance)) * gravityScale * direction.normalized;
     }
 }
