@@ -10,11 +10,14 @@ public class Spaceship : PhysicsObject
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private SpaceshipVisual spaceshipVisual;
     private Force _thrustersForce = new Force(Vector3.zero);
+    
 
     public override void Start()
     {
         base.Start();
         _forces.Add(_thrustersForce);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -31,12 +34,28 @@ public class Spaceship : PhysicsObject
     {
         DirectionalThrusters();
         ThrustersVisuals();
-
+        RotationalThrusters();
         if (Input.GetKey(KeyCode.F))
         {
             
             _thrustersForce.Value += -Velocity * speed;
         }
+    }
+
+    private void RotationalThrusters()
+    {
+        var xAxis = Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
+        var yAxis = Input.GetAxis("Mouse Y")* rotateSpeed * Time.deltaTime;
+        float zAxis = 0;
+        
+        if (Input.GetKey(KeyCode.Q)) zAxis += 1;
+        
+        if (Input.GetKey(KeyCode.E)) zAxis -= 1;
+        
+
+        zAxis *= rotateSpeed * Time.deltaTime;
+        
+        transform.Rotate(-yAxis, xAxis,zAxis);
     }
 
     private void ThrustersVisuals()
@@ -130,7 +149,6 @@ public class Spaceship : PhysicsObject
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position,transform.localScale);
         Gizmos.DrawRay(transform.position,_gravityForce.Value);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,7 +42,11 @@ public class PhysicsObject : MonoBehaviour
     public void ApplyGravityForce(Vector3 force)
     {
         if (!usingGravity) return;
-        if(_isColliding) return;
+        if (_isColliding)
+        {
+            _gravityForce.Value = Vector3.zero;
+            return;
+        }
         _gravityForce.Value = force / mass;
         //if (forceDirection.magnitude is <= 0.1f or >= -0.1f) return;
     }
@@ -49,6 +54,16 @@ public class PhysicsObject : MonoBehaviour
     {
         if(_isColliding) return;
         _angularForce.Value += force;
+    }
+
+    private void OnTriggerEnter(UnityEngine.Collider other)
+    {
+        _isColliding = true;
+    }
+
+    private void OnTriggerExit(UnityEngine.Collider other)
+    {
+        _isColliding = false;
     }
 }
 
