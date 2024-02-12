@@ -21,16 +21,24 @@ public class PhysicsManager : MonoBehaviour
             {
                 if (physicsObject == otherPhysicsObject) continue;
                 
-                physicsObject.ApplyGravityForce(ApplyForceBetweenBodies(physicsObject, otherPhysicsObject));
+                physicsObject.ApplyGravityForce(ApplyGravityForceBetweenBodies(physicsObject, otherPhysicsObject));
+                var distance = CalculateDistance(physicsObject, otherPhysicsObject);
+                physicsObject.ApplyAngularForce(Vector3.Distance(physicsObject.Position,otherPhysicsObject.Position),distance.normalized);
             }
         }
     }
 
-    private Vector3 ApplyForceBetweenBodies(PhysicsObject physicsObject1,PhysicsObject physicsObject2)
+    private Vector3 ApplyGravityForceBetweenBodies(PhysicsObject physicsObject1,PhysicsObject physicsObject2)
     {
         var massProduct = physicsObject1.Mass * physicsObject2.Mass;
         var distance = Vector3.Distance(physicsObject1.Position, physicsObject2.Position);
         var direction = physicsObject2.Position - physicsObject1.Position;
         return (massProduct / (distance * distance)) * gravityScale * direction.normalized;
     }
+    private Vector3 CalculateDistance(PhysicsObject physicsObject1,PhysicsObject physicsObject2)
+    {
+        var distance = physicsObject1.Position - physicsObject2.Position;
+        return distance;
+    }
+    
 }

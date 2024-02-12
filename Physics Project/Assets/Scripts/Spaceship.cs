@@ -122,27 +122,27 @@ public class Spaceship : PhysicsObject
     {
         if (Input.GetKey(KeyCode.W))
         {
-            _thrustersForce.Value += Vector3.forward * speed;
+            _thrustersForce.Value += transform.forward * speed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            _thrustersForce.Value += Vector3.back * speed;
+            _thrustersForce.Value -= transform.forward * speed;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            _thrustersForce.Value += Vector3.left * speed;
+            _thrustersForce.Value += transform.right * speed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            _thrustersForce.Value += Vector3.right * speed;
+            _thrustersForce.Value -= transform.right * speed;
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            _thrustersForce.Value += Vector3.up * speed;
+            _thrustersForce.Value += transform.up * speed;
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            _thrustersForce.Value += Vector3.down * speed;
+            _thrustersForce.Value -= transform.up * speed;
         }
     }
 
