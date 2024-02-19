@@ -241,8 +241,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f6f1315806709e46927c51dfc3a6a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 150
-  usingGravity: 1
+  _mass: 0
+  _usingGravity: 0
+  _hasCollider: 0
+  _colliderConfig:
+    ColliderType: 0
+    Size: {x: 0, y: 0, z: 0}
+    Radius: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,8 +611,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicsObjects:
-  - {fileID: 43212808}
   - {fileID: 1170649737}
+  - {fileID: 43212808}
   gravityScale: 100
 --- !u!4 &1965893935
 Transform:
@@ -644,6 +649,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}
+      propertyPath: _hasCollider
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
       propertyPath: lineRenderer
       value: 
       objectReference: {fileID: 1228957352}
@@ -651,6 +661,11 @@ PrefabInstance:
         type: 3}
       propertyPath: usingGravity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
+      propertyPath: _usingGravity
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1091571428989903185, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}
