@@ -17,7 +17,71 @@ public class SpaceshipVisual : MonoBehaviour
         ToggleAllThrusterVisuals(false);
     }
 
-    public void ToggleThrusterVisual(Direction direction, bool state)
+    private void Update()
+    {
+        ThrustersVisuals();
+    }
+
+    private void ThrustersVisuals()
+    {
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            ToggleThrusterVisual(Direction.Forward,true);
+        }
+        else if (Input.GetKeyUp(KeyCode.W))
+        {
+            ToggleThrusterVisual(Direction.Forward,false);
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            ToggleThrusterVisual(Direction.Backward,true);
+        }
+        else if (Input.GetKeyUp(KeyCode.S))
+        {
+            ToggleThrusterVisual(Direction.Backward,false);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            ToggleThrusterVisual(Direction.Left,true);
+        }
+        else if (Input.GetKeyUp(KeyCode.A))
+        {
+            ToggleThrusterVisual(Direction.Left,false);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            ToggleThrusterVisual(Direction.Right,true);
+        }
+        else if (Input.GetKeyUp(KeyCode.D))
+        {
+            ToggleThrusterVisual(Direction.Right,false);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ToggleThrusterVisual(Direction.Up,true);
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            ToggleThrusterVisual(Direction.Up,false);
+        }
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            ToggleThrusterVisual(Direction.Down,true);
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            ToggleThrusterVisual(Direction.Down,false);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            ToggleAllThrusterVisuals(true);
+        }
+        else if (Input.GetKeyUp(KeyCode.F))
+        {
+            ToggleAllThrusterVisuals(false);
+        }
+    }
+    private void ToggleThrusterVisual(Direction direction, bool state)
     {
         switch (direction)
         {
@@ -42,7 +106,7 @@ public class SpaceshipVisual : MonoBehaviour
         }
     }
 
-    public void ToggleAllThrusterVisuals(bool state)
+    private void ToggleAllThrusterVisuals(bool state)
     {
         upThrusterParticleSystem.gameObject.SetActive(state);
         downThrusterParticleSystem.gameObject.SetActive(state);

@@ -1,15 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Spaceship : PhysicsObject
 {
     [SerializeField] private float speed;
+    [SerializeField] private float stopSpeed;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private SpaceshipVisual spaceshipVisual;
     private Force _thrustersForce = new Force(Vector3.zero);
+    private Vector3 _currentThrustersValue;
+    private bool _thrustersActive;
+    private Vector3 _velocity;
     
 
     public override void Start()
@@ -23,25 +28,30 @@ public class Spaceship : PhysicsObject
     private void Update()
     {
         HandleThrusters();
+        HandleCannons();
+    }
 
-        // if (Physics.BoxCast(transform.position, transform.localScale / 2, Vector3.forward,out var hit))
-        // {
-        //     Debug.Log("colliding with:" + hit.collider.name);
-        // }
+    private void HandleCannons()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            //shoot projectile
+        }
     }
 
     private void HandleThrusters()
     {
         DirectionalThrusters();
-        ThrustersVisuals();
         RotationalThrusters();
         if (Input.GetKey(KeyCode.F))
         {
-            
-            _thrustersForce.Value += -Velocity * speed;
+            _thrustersForce.Value += -ForcesSum * stopSpeed;
+        }
+        else if (Input.GetKeyUp(KeyCode.F))
+        {
+            _thrustersForce.Value = Vector3.zero;
         }
     }
-
     private void RotationalThrusters()
     {
         var xAxis = Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
@@ -57,95 +67,34 @@ public class Spaceship : PhysicsObject
         
         transform.Rotate(-yAxis, xAxis,zAxis);
     }
-
-    private void ThrustersVisuals()
-    {
-        if(Input.GetKeyDown(KeyCode.W))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Forward,true);
-        }
-        else if (Input.GetKeyUp(KeyCode.W))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Forward,false);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Backward,true);
-        }
-        else if (Input.GetKeyUp(KeyCode.S))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Backward,false);
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Left,true);
-        }
-        else if (Input.GetKeyUp(KeyCode.A))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Left,false);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Right,true);
-        }
-        else if (Input.GetKeyUp(KeyCode.D))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Right,false);
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Up,true);
-        }
-        else if (Input.GetKeyUp(KeyCode.Space))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Up,false);
-        }
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Down,true);
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            spaceshipVisual.ToggleThrusterVisual(Direction.Down,false);
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            spaceshipVisual.ToggleAllThrusterVisuals(true);
-        }
-        else if (Input.GetKeyUp(KeyCode.F))
-        {
-            spaceshipVisual.ToggleAllThrusterVisuals(false);
-        }
-    }
-
+    
     private void DirectionalThrusters()
     {
         if (Input.GetKey(KeyCode.W))
         {
-            _thrustersForce.Value += transform.forward * speed;
+            _thrustersForce.Value = transform.forward * speed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            _thrustersForce.Value -= transform.forward * speed;
+            _thrustersForce.Value = -transform.forward * speed;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            _thrustersForce.Value += transform.right * speed;
+            _thrustersForce.Value = -transform.right * speed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            _thrustersForce.Value -= transform.right * speed;
+            _thrustersForce.Value = transform.right * speed;
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            _thrustersForce.Value += transform.up * speed;
+            _thrustersForce.Value = transform.up * speed;
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            _thrustersForce.Value -= transform.up * speed;
+            _thrustersForce.Value = -transform.up * speed;
         }
     }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

@@ -1,0 +1,8 @@
+1. gravity and angular force working properly with 2 objects
+2. collision detection
+3. collision force
+4. make it work with multiple objects
+5. add multiple planets rotating around the sun
+6. shooting mechanic
+7. enemies that target player
+8. ui and visuals

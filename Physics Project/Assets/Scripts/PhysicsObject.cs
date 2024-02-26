@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using VInspector;
 
 public class PhysicsObject : MonoBehaviour
 {
@@ -19,7 +18,7 @@ public class PhysicsObject : MonoBehaviour
     [SerializeField] private float _mass;
     [SerializeField] private bool _usingGravity;
     [SerializeField] private bool _hasCollider;
-    [SerializeField][ShowIf(nameof(_hasCollider))] private ColliderConfig _colliderConfig;
+    [SerializeField] private ColliderConfig _colliderConfig;
     
 
     private bool _isColliding;
@@ -31,7 +30,8 @@ public class PhysicsObject : MonoBehaviour
 
 
     private Vector3 _lastPos;
-    public Vector3 Velocity
+    private Vector3 _velocity;
+    public Vector3 ForcesSum
     {
         get
         {
@@ -53,14 +53,15 @@ public class PhysicsObject : MonoBehaviour
     public virtual void Start()
     {
         if (_usingGravity) _forces.Add(_gravityForce);
-        if (_usingGravity) _forces.Add(_angularForce);
+        //if (_usingGravity) _forces.Add(_angularForce);
     }
 
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
-        transform.position += (Velocity) * Time.fixedDeltaTime;
-        //CalculateSpeed();
+        _velocity += (ForcesSum / _mass) * Time.fixedDeltaTime;
+        transform.position += _velocity * Time.fixedDeltaTime;
+        
     }
 
     public void ApplyGravityForce(Vector3 force)
@@ -71,14 +72,14 @@ public class PhysicsObject : MonoBehaviour
             _gravityForce.Value = Vector3.zero;
             return;
         }
-        _gravityForce.Value = force / _mass;
+        _gravityForce.Value = force;
         
     }
     public void ApplyAngularForce(float radius, Vector3 direction)
     {
         if(_isColliding) return;
         var force = (Speed * Speed * _mass / radius) * direction;
-        _angularForce.Value += force / _mass;
+        _angularForce.Value = force;
     }
 
     private void CalculateSpeed()

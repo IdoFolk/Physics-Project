@@ -224,7 +224,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_LocalScale: {x: 500, y: 500, z: 500}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -241,8 +241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f6f1315806709e46927c51dfc3a6a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mass: 0
-  _usingGravity: 0
+  _mass: 1000
+  _usingGravity: 1
   _hasCollider: 0
   _colliderConfig:
     ColliderType: 0
@@ -644,6 +644,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}
+      propertyPath: _mass
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
+      propertyPath: speed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
+      propertyPath: stopSpeed
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
       propertyPath: rotateSpeed
       value: 50
       objectReference: {fileID: 0}
@@ -665,7 +680,7 @@ PrefabInstance:
     - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}
       propertyPath: _usingGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1091571428989903185, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}
@@ -680,7 +695,7 @@ PrefabInstance:
     - target: {fileID: 1091571428989903185, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -31.08
+      value: -290.5
       objectReference: {fileID: 0}
     - target: {fileID: 1091571428989903185, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}
@@ -721,6 +736,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spaceship
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397829696721730086, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397829696721730086, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 024c50e40a7a57746b9fb58731edef11, type: 2}
+    - target: {fileID: 7397829696721730086, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397829696721730086, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.20625001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

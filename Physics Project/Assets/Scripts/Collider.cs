@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using VInspector;
 
 [Serializable]
 public class Collider
@@ -32,8 +31,8 @@ public class Collider
 public struct ColliderConfig
 {
     public ColliderType ColliderType;
-    [ShowIf(nameof(ColliderType),ColliderType.Box)]public Vector3 Size;
-    [ShowIf(nameof(ColliderType),ColliderType.Sphere)]public float Radius;
+    public Vector3 Size;
+    public float Radius;
     
     
 }
