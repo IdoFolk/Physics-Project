@@ -45,7 +45,7 @@ public class Spaceship : PhysicsObject
         RotationalThrusters();
         if (Input.GetKey(KeyCode.F))
         {
-            _thrustersForce.Value += -ForcesSum * stopSpeed;
+            _thrustersForce.Value += -Velocity * stopSpeed;
         }
         else if (Input.GetKeyUp(KeyCode.F))
         {
@@ -72,27 +72,27 @@ public class Spaceship : PhysicsObject
     {
         if (Input.GetKey(KeyCode.W))
         {
-            _thrustersForce.Value = transform.forward * speed;
+            _thrustersForce.Value += transform.forward * speed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            _thrustersForce.Value = -transform.forward * speed;
+            _thrustersForce.Value += -transform.forward * speed;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            _thrustersForce.Value = -transform.right * speed;
+            _thrustersForce.Value += -transform.right * speed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            _thrustersForce.Value = transform.right * speed;
+            _thrustersForce.Value += transform.right * speed;
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            _thrustersForce.Value = transform.up * speed;
+            _thrustersForce.Value += transform.up * speed;
         }
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            _thrustersForce.Value = -transform.up * speed;
+            _thrustersForce.Value += -transform.up * speed;
         }
     }
     private void OnDrawGizmos()

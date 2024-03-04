@@ -13,7 +13,7 @@ public class PhysicsObject : MonoBehaviour
         get => _test;
         set => _test = value;
     }
-    public float Speed => _speed;
+    public Vector3 Speed => _speed;
     public Vector3 Position => transform.position;
     [SerializeField] private float _mass;
     [SerializeField] private bool _usingGravity;
@@ -26,12 +26,11 @@ public class PhysicsObject : MonoBehaviour
     protected Force _gravityForce = new Force(Vector3.zero);
     private Force _angularForce = new Force(Vector3.zero);
     private Collider _collider;
-    private float _speed;
+    private Vector3 _speed;
 
 
     private Vector3 _lastPos;
-    private Vector3 _velocity;
-    public Vector3 ForcesSum
+    public Vector3 Velocity
     {
         get
         {
@@ -52,6 +51,7 @@ public class PhysicsObject : MonoBehaviour
 
     public virtual void Start()
     {
+        _lastPos = Position;
         if (_usingGravity) _forces.Add(_gravityForce);
         //if (_usingGravity) _forces.Add(_angularForce);
     }
@@ -59,9 +59,10 @@ public class PhysicsObject : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        _velocity += (ForcesSum / _mass) * Time.fixedDeltaTime;
-        transform.position += _velocity * Time.fixedDeltaTime;
-        
+        //_velocity += (ForcesSum / _mass) * Time.fixedDeltaTime;
+        transform.position += _speed + (Velocity / _mass) * Time.fixedDeltaTime;
+        _speed = CalculateSpeed();
+
     }
 
     public void ApplyGravityForce(Vector3 force)
@@ -78,16 +79,15 @@ public class PhysicsObject : MonoBehaviour
     public void ApplyAngularForce(float radius, Vector3 direction)
     {
         if(_isColliding) return;
-        var force = (Speed * Speed * _mass / radius) * direction;
-        _angularForce.Value = force;
+        //var force = (Speed * Speed * _mass / radius) * direction;
+        //_angularForce.Value = force; //fix this
     }
 
-    private void CalculateSpeed()
+    private Vector3 CalculateSpeed()
     {
-        var distance = Vector3.Distance(_lastPos, Position);
-        _speed = distance;
-        Debug.Log(_speed);
+        var distance = _lastPos -  Position;
         _lastPos = Position;
+        return distance;
     }
 
     private void OnDrawGizmosSelected()

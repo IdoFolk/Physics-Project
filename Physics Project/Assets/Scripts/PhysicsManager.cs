@@ -30,9 +30,9 @@ public class PhysicsManager : MonoBehaviour
 
     private Vector3 ApplyGravityForceBetweenBodies(PhysicsObject physicsObject1,PhysicsObject physicsObject2)
     {
-        var massProduct = physicsObject1.Mass * physicsObject2.Mass;
-        var distance = Vector3.Distance(physicsObject1.Position, physicsObject2.Position);
-        var direction = physicsObject2.Position - physicsObject1.Position;
+        float massProduct = physicsObject1.Mass * physicsObject2.Mass;
+        float distance = Vector3.Distance(physicsObject1.Position, physicsObject2.Position);
+        Vector3 direction = physicsObject2.Position - physicsObject1.Position;
         return (massProduct / (distance * distance)) * gravityScale * direction.normalized;
     }
     private Vector3 CalculateDistance(PhysicsObject physicsObject1,PhysicsObject physicsObject2)
