@@ -650,7 +650,7 @@ PrefabInstance:
     - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}
       propertyPath: speed
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}
@@ -681,6 +681,16 @@ PrefabInstance:
         type: 3}
       propertyPath: _usingGravity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
+      propertyPath: thrusterSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
+      propertyPath: thrusterStopSpeed
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 1091571428989903185, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}

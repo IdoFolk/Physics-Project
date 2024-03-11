@@ -59,10 +59,8 @@ public class PhysicsObject : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        //_velocity += (ForcesSum / _mass) * Time.fixedDeltaTime;
-        transform.position += _speed + (Velocity / _mass) * Time.fixedDeltaTime;
-        _speed = CalculateSpeed();
-
+        _speed += (Velocity / _mass) * Time.fixedDeltaTime;
+        transform.position += _speed * Time.fixedDeltaTime;
     }
 
     public void ApplyGravityForce(Vector3 force)
@@ -85,9 +83,10 @@ public class PhysicsObject : MonoBehaviour
 
     private Vector3 CalculateSpeed()
     {
-        var distance = _lastPos -  Position;
+        var delta = _lastPos -  Position;
         _lastPos = Position;
-        return distance;
+        
+        return delta * Time.fixedDeltaTime;
     }
 
     private void OnDrawGizmosSelected()

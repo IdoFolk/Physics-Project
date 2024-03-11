@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class Spaceship : PhysicsObject
 {
-    [SerializeField] private float speed;
-    [SerializeField] private float stopSpeed;
+    [SerializeField] private float thrusterSpeed;
+    [SerializeField] private float thrusterStopSpeed;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private SpaceshipVisual spaceshipVisual;
@@ -45,7 +45,7 @@ public class Spaceship : PhysicsObject
         RotationalThrusters();
         if (Input.GetKey(KeyCode.F))
         {
-            _thrustersForce.Value += -Velocity * stopSpeed;
+            _thrustersForce.Value =  (Mass * thrusterStopSpeed * -Speed) / Time.fixedDeltaTime;
         }
         else if (Input.GetKeyUp(KeyCode.F))
         {
@@ -70,30 +70,39 @@ public class Spaceship : PhysicsObject
     
     private void DirectionalThrusters()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            _thrustersForce.Value += transform.forward * speed;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            _thrustersForce.Value += -transform.forward * speed;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            _thrustersForce.Value += -transform.right * speed;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            _thrustersForce.Value += transform.right * speed;
-        }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            _thrustersForce.Value += transform.up * speed;
-        }
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            _thrustersForce.Value += -transform.up * speed;
-        }
+
+        var rightAxis = Input.GetAxis("Horizontal");
+        var forwardAxis = Input.GetAxis("Vertical");
+        var upAxis = Input.GetAxis("Depth");
+
+        _thrustersForce.Value = thrusterSpeed * (transform.forward * forwardAxis + transform.right * rightAxis + transform.up * upAxis);
+        
+        
+        // if (Input.GetKeyDown(KeyCode.W))
+        // {
+        //     _thrustersForce.Value = transform.forward * speed;
+        // }
+        //
+        // if (Input.GetKey(KeyCode.S))
+        // {
+        //     _thrustersForce.Value = -transform.forward * speed;
+        // }
+        // if (Input.GetKey(KeyCode.A))
+        // {
+        //     _thrustersForce.Value = -transform.right * speed;
+        // }
+        // if (Input.GetKey(KeyCode.D))
+        // {
+        //     _thrustersForce.Value = transform.right * speed;
+        // }
+        // if (Input.GetKey(KeyCode.Space))
+        // {
+        //     _thrustersForce.Value = transform.up * speed;
+        // }
+        // if (Input.GetKey(KeyCode.LeftControl))
+        // {
+        //     _thrustersForce.Value = -transform.up * speed;
+        // }
     }
     private void OnDrawGizmos()
     {
