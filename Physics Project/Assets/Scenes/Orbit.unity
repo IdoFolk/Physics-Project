@@ -243,11 +243,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mass: 100
   _usingGravity: 1
-  _hasCollider: 0
+  _hasCollider: 1
   _colliderConfig:
-    ColliderType: 0
+    ColliderType: 1
     Size: {x: 0, y: 0, z: 0}
-    Radius: 0
+    Radius: 50
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,7 +665,7 @@ PrefabInstance:
     - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}
       propertyPath: _hasCollider
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}
@@ -691,6 +691,16 @@ PrefabInstance:
         type: 3}
       propertyPath: thrusterStopSpeed
       value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
+      propertyPath: _colliderConfig.Radius
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 360861512328153308, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
+        type: 3}
+      propertyPath: _colliderConfig.ColliderType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1091571428989903185, guid: e7cfeea70dacdb24eb32c29f9c4f47b0,
         type: 3}

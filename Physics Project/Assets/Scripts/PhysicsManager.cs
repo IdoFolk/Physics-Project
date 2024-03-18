@@ -22,8 +22,9 @@ public class PhysicsManager : MonoBehaviour
                 if (physicsObject == otherPhysicsObject) continue;
                 
                 physicsObject.ApplyGravityForce(ApplyGravityForceBetweenBodies(physicsObject, otherPhysicsObject));
-                var distance = CalculateDistance(physicsObject, otherPhysicsObject);
-                physicsObject.ApplyAngularForce(Vector3.Distance(physicsObject.Position,otherPhysicsObject.Position),distance.normalized);
+                physicsObject.CheckCollision(otherPhysicsObject);
+                //var distance = CalculateDistance(physicsObject, otherPhysicsObject);
+                //physicsObject.ApplyAngularForce(Vector3.Distance(physicsObject.Position,otherPhysicsObject.Position),distance.normalized);
             }
         }
     }

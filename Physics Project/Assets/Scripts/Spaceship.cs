@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Spaceship : PhysicsObject
@@ -107,6 +104,6 @@ public class Spaceship : PhysicsObject
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position,_gravityForce.Value);
+        Gizmos.DrawRay(transform.position,Speed);
     }
 }
