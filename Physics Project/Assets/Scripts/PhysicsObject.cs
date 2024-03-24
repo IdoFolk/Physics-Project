@@ -20,10 +20,12 @@ public class PhysicsObject : MonoBehaviour
     }
     public Collider Collider { get; private set; }
     public float Mass => _mass;
+    public float Bounciness => _bounciness;
     public Vector3 Speed => _speed;
     public Vector3 Position => transform.position;
     
     [SerializeField] private float _mass;
+    [SerializeField,Range(0,1)] private float _bounciness;
     [SerializeField] private bool _usingGravity;
     [SerializeField] private bool _hasCollider;
     [SerializeField] private ColliderConfig _colliderConfig;
@@ -76,7 +78,7 @@ public class PhysicsObject : MonoBehaviour
 
     private void ApplyNormalForce()
     {
-        _speed = -_speed / _mass;
+        _speed = -_speed;
     }
 
     private void OnDrawGizmosSelected()
