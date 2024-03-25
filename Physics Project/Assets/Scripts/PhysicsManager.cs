@@ -7,6 +7,7 @@ using UnityEngine;
 public class PhysicsManager : MonoBehaviour
 {
     [SerializeField] private PhysicsObject[] physicsObjects;
+    [SerializeField] private PhysicsObject spaceship;
     [SerializeField] private float gravityScale;
     private void OnValidate()
     {
@@ -17,15 +18,9 @@ public class PhysicsManager : MonoBehaviour
     {
         foreach (var physicsObject in physicsObjects)
         {
-            foreach (var otherPhysicsObject in physicsObjects)
-            {
-                if (physicsObject == otherPhysicsObject) continue;
-                
-                physicsObject.ApplyGravityForce(ApplyGravityForceBetweenBodies(physicsObject, otherPhysicsObject));
-                physicsObject.CheckCollision(otherPhysicsObject);
-                //var distance = CalculateDistance(physicsObject, otherPhysicsObject);
-                //physicsObject.ApplyAngularForce(Vector3.Distance(physicsObject.Position,otherPhysicsObject.Position),distance.normalized);
-            }
+            if (physicsObject == spaceship) continue;
+            spaceship.ApplyGravityForce(GetInstanceID(),ApplyGravityForceBetweenBodies(spaceship, physicsObject));
+            physicsObject.CheckCollision(physicsObject);
         }
     }
 

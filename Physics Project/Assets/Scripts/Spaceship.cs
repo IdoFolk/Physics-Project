@@ -17,7 +17,7 @@ public class Spaceship : PhysicsObject
     public override void Start()
     {
         base.Start();
-        _forces.Add(_thrustersForce);
+        Velocity.AddForce(_thrustersForce);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
