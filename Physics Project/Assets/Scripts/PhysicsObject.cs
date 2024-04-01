@@ -5,26 +5,29 @@ using UnityEngine;
 
 public class PhysicsObject : MonoBehaviour
 {
+    // G - Gravitational constant 
+    private static readonly float G = 6.674f * Mathf.Pow(10, -11);
     public SumForces Velocity { get; private set; } = new(0);
 
     public SumForces GravityForces { get; private set; } = new(1);
     public Collider Collider { get; private set; }
+    public Vector3 Speed { get; private set; }
     public float Mass => _mass;
     public float Bounciness => _bounciness;
-    public Vector3 Speed => _speed;
+    public PhysicsObject PlanetOrbit => _planetOrbit;
     public Vector3 Position => transform.position;
 
     [SerializeField] private float _mass;
     [SerializeField, Range(0, 2)] private float _bounciness;
     [SerializeField] private bool _isMoveable;
     [SerializeField] private bool _usingGravity;
+    [SerializeField] private PhysicsObject _planetOrbit;
     [SerializeField] private bool _hasCollider;
     [SerializeField] private ColliderConfig _colliderConfig;
     [SerializeField, Range(0, 0.1f)] private float _penetrationTolerance;
 
 
     private bool _isColliding;
-    private Vector3 _speed;
     private Vector3 _lastPos;
 
 
@@ -37,13 +40,14 @@ public class PhysicsObject : MonoBehaviour
     {
         _lastPos = Position;
         if (_usingGravity) Velocity.AddForce(GravityForces);
+        if(_planetOrbit != null) SetInitialOrbitalSpeed(_planetOrbit);
     }
 
 
     protected virtual void FixedUpdate()
     {
-        _speed += (Velocity.Value / _mass) * Time.fixedDeltaTime;
-        transform.position += _speed * Time.fixedDeltaTime;
+        Speed += (Velocity.Value / _mass) * Time.fixedDeltaTime;
+        transform.position += Speed * Time.fixedDeltaTime;
     }
 
     public void ApplyGravityForce(int objectID, Vector3 force)
@@ -61,7 +65,7 @@ public class PhysicsObject : MonoBehaviour
         {
             // Calculate collision normal
             Vector3 collisionNormal = (Position - otherPhysicsObject.Position).normalized;
-            ApplyNormalForce(collisionNormal);
+            if (_isMoveable) ApplyNormalForce(collisionNormal);
 
             // Resolve penetration by adjusting positions
             float penetrationDepth = (Collider.Radius + otherPhysicsObject.Collider.Radius) - distance;
@@ -76,7 +80,25 @@ public class PhysicsObject : MonoBehaviour
 
     private void ApplyNormalForce(Vector3 collisionNormal)
     {
-        _speed = Vector3.Reflect(_speed, collisionNormal) * _bounciness;
+        Speed = Vector3.Reflect(Speed, collisionNormal) * _bounciness;
+    }
+
+    private void SetInitialOrbitalSpeed(PhysicsObject planet)
+    {
+        // Calculate the distance between the satellite and planet
+        float r = Vector3.Distance(planet.Position, Position);
+
+        // Calculate the orbital speed needed
+        float v = Mathf.Sqrt(PhysicsManager.GravityScale * planet.Mass / r);
+
+        // Get direction from satellite to planet
+        Vector3 direction = (planet.Position - Position).normalized;
+
+        // Rotate direction 90 degrees around Y axis to obtain a tangential direction (perpendicular to original direction):
+        Vector3 tangentialDirection = Quaternion.Euler(0, 90, 0) * direction;
+
+        // Set initial speed of satellite
+        Speed = tangentialDirection * v;
     }
 
     private void OnDrawGizmosSelected()
