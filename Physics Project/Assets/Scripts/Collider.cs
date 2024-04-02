@@ -16,7 +16,7 @@ public class Collider
     {
         Size = config.Size;
         ColliderType = config.ColliderType;
-        Radius = config.Radius;
+        Radius = parent.localScale.x;
         Transform = parent;
     }
 

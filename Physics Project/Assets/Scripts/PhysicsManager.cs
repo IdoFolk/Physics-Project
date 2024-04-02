@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PhysicsManager : MonoBehaviour
+public class PhysicsManager : MonoSingleton<PhysicsManager>
 {
-    public static float GravityScale = 100;
+    public float GravityScale = 100;
     [SerializeField] private PhysicsObject[] physicsObjects;
-    [SerializeField] private PhysicsObject spaceship;
     private void OnValidate()
     {
         physicsObjects = FindObjectsByType<PhysicsObject>(FindObjectsInactive.Exclude,FindObjectsSortMode.None);

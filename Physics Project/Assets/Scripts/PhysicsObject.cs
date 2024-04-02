@@ -22,6 +22,7 @@ public class PhysicsObject : MonoBehaviour
     [SerializeField] private bool _isMoveable;
     [SerializeField] private bool _usingGravity;
     [SerializeField] private PhysicsObject _planetOrbit;
+    [SerializeField] private bool _onlyOrbitAroundPlanet;
     [SerializeField] private bool _hasCollider;
     [SerializeField] private ColliderConfig _colliderConfig;
     [SerializeField, Range(0, 0.1f)] private float _penetrationTolerance;
@@ -53,6 +54,11 @@ public class PhysicsObject : MonoBehaviour
     public void ApplyGravityForce(int objectID, Vector3 force)
     {
         if (!_usingGravity) return;
+        if (_onlyOrbitAroundPlanet)
+        {
+            if(ReferenceEquals(_planetOrbit,null)) return;
+            if(_planetOrbit.GetInstanceID() != objectID) return;
+        }
         GravityForces.ChangeForce(objectID, force);
     }
 
@@ -89,7 +95,7 @@ public class PhysicsObject : MonoBehaviour
         float r = Vector3.Distance(planet.Position, Position);
 
         // Calculate the orbital speed needed
-        float v = Mathf.Sqrt(PhysicsManager.GravityScale * planet.Mass / r);
+        float v = Mathf.Sqrt(PhysicsManager.Instance.GravityScale * planet.Mass / r);
 
         // Get direction from satellite to planet
         Vector3 direction = (planet.Position - Position).normalized;
