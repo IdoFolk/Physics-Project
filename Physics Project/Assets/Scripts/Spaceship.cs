@@ -6,40 +6,47 @@ public class Spaceship : PhysicsObject
     [SerializeField] private float thrusterSpeed;
     [SerializeField] private float thrusterStopSpeed;
     [SerializeField] private float rotateSpeed;
+    [SerializeField] private float fuelTank;
     [SerializeField] private LineRenderer lineRenderer;
-    [SerializeField] private SpaceshipVisual spaceshipVisual;
     private Force _thrustersForce = new Force(Vector3.zero);
     private Vector3 _currentThrustersValue;
-    private bool _thrustersActive;
     private Vector3 _velocity;
-    
 
-    public override void Start()
+    private SpaceshipVisual _visual;
+    private bool _fuelDepleted;
+
+    public float FuelTank => fuelTank;
+    public bool ThrustersActive { get; private set; }
+    public float CurrentFuel { get; private set; }
+    protected override void Awake()
+    {
+        base.Awake();
+        _visual ??= GetComponent<SpaceshipVisual>();
+    }
+
+    protected override void Start()
     {
         base.Start();
         Velocity.AddForce(_thrustersForce);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        CurrentFuel = fuelTank;
     }
 
     private void Update()
     {
         HandleThrusters();
-        HandleCannons();
     }
-
-    private void HandleCannons()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //shoot projectile
-        }
-    }
-
+    
     private void HandleThrusters()
     {
-        DirectionalThrusters();
         RotationalThrusters();
+        if (CurrentFuel <= -0.1f)
+        {
+            if(!_fuelDepleted) DepleteFuel();
+            return;
+        }
+        DirectionalThrusters();
         if (Input.GetKey(KeyCode.F))
         {
             _thrustersForce.Value =  (Mass * thrusterStopSpeed * -Speed) / Time.fixedDeltaTime;
@@ -48,7 +55,20 @@ public class Spaceship : PhysicsObject
         {
             _thrustersForce.Value = Vector3.zero;
         }
+
+        if (ThrustersActive)
+        {
+            CurrentFuel -= Time.deltaTime;
+        }
     }
+
+    private void DepleteFuel()
+    {
+        //add sound for fuel exaust
+        _visual.ToggleAllThrusterVisuals(false);
+        _fuelDepleted = true;
+    }
+
     private void RotationalThrusters()
     {
         var xAxis = Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
@@ -72,34 +92,10 @@ public class Spaceship : PhysicsObject
         var forwardAxis = Input.GetAxis("Vertical");
         var upAxis = Input.GetAxis("Depth");
 
+        if (forwardAxis != 0 || rightAxis != 0 || upAxis != 0) ThrustersActive = true;
+        else ThrustersActive = false;
         _thrustersForce.Value = thrusterSpeed * (transform.forward * forwardAxis + transform.right * rightAxis + transform.up * upAxis);
         
-        
-        // if (Input.GetKeyDown(KeyCode.W))
-        // {
-        //     _thrustersForce.Value = transform.forward * speed;
-        // }
-        //
-        // if (Input.GetKey(KeyCode.S))
-        // {
-        //     _thrustersForce.Value = -transform.forward * speed;
-        // }
-        // if (Input.GetKey(KeyCode.A))
-        // {
-        //     _thrustersForce.Value = -transform.right * speed;
-        // }
-        // if (Input.GetKey(KeyCode.D))
-        // {
-        //     _thrustersForce.Value = transform.right * speed;
-        // }
-        // if (Input.GetKey(KeyCode.Space))
-        // {
-        //     _thrustersForce.Value = transform.up * speed;
-        // }
-        // if (Input.GetKey(KeyCode.LeftControl))
-        // {
-        //     _thrustersForce.Value = -transform.up * speed;
-        // }
     }
     private void OnDrawGizmos()
     {

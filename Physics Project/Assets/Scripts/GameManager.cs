@@ -8,6 +8,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private PanelManager _panelManager;
     [SerializeField] private Animator _menuPanel;
     [SerializeField] private Animator _lookAroundPanel;
+    [SerializeField] private Planet _planet;
 
     private bool _lookAroundMode;
 
@@ -15,6 +16,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         base.Awake();
         _camera.GetComponent<FreeCamera>().enabled = false;
+        DontDestroyOnLoad(this);
     }
 
     private void Update()

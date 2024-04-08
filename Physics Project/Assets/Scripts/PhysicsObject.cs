@@ -32,12 +32,12 @@ public class PhysicsObject : MonoBehaviour
     private Vector3 _lastPos;
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (_hasCollider) Collider = new Collider(_colliderConfig, transform);
     }
 
-    public virtual void Start()
+    protected virtual void Start()
     {
         _lastPos = Position;
         if (_usingGravity) Velocity.AddForce(GravityForces);

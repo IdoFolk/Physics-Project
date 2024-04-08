@@ -11,6 +11,12 @@ public class SpaceshipVisual : MonoBehaviour
     [SerializeField] private ParticleSystem backwardThrusterParticleSystem;
     [SerializeField] private ParticleSystem upThrusterParticleSystem;
     [SerializeField] private ParticleSystem downThrusterParticleSystem;
+    private Spaceship _owner;
+
+    private void Awake()
+    {
+        _owner ??= GetComponent<Spaceship>();
+    }
 
     private void Start()
     {
@@ -24,6 +30,7 @@ public class SpaceshipVisual : MonoBehaviour
 
     private void ThrustersVisuals()
     {
+        if(_owner.CurrentFuel <= 0) return;
         if(Input.GetKeyDown(KeyCode.W))
         {
             ToggleThrusterVisual(Direction.Forward,true);
@@ -81,7 +88,7 @@ public class SpaceshipVisual : MonoBehaviour
             ToggleAllThrusterVisuals(false);
         }
     }
-    private void ToggleThrusterVisual(Direction direction, bool state)
+    public void ToggleThrusterVisual(Direction direction, bool state)
     {
         switch (direction)
         {
@@ -106,7 +113,7 @@ public class SpaceshipVisual : MonoBehaviour
         }
     }
 
-    private void ToggleAllThrusterVisuals(bool state)
+    public void ToggleAllThrusterVisuals(bool state)
     {
         upThrusterParticleSystem.gameObject.SetActive(state);
         downThrusterParticleSystem.gameObject.SetActive(state);
