@@ -154,15 +154,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GravityScale: 1000
   physicsObjects:
-  - {fileID: 1237019100}
+  - {fileID: 1165029834}
+  - {fileID: 1330884616}
+  - {fileID: 449623352}
   - {fileID: 878972161}
   - {fileID: 679883978}
-  - {fileID: 449623352}
-  - {fileID: 874028522}
-  - {fileID: 1330884616}
-  - {fileID: 1326864036}
-  - {fileID: 1165029834}
   - {fileID: 1796049648}
+  - {fileID: 1326864036}
+  - {fileID: 874028522}
+  - {fileID: 1237019100}
   - {fileID: 702275174}
 --- !u!4 &24705766
 Transform:
@@ -910,6 +910,7 @@ MonoBehaviour:
   _panelManager: {fileID: 8910574336052665777}
   _menuPanel: {fileID: 1811276423456941183}
   _lookAroundPanel: {fileID: 1976960703}
+  _planet: {fileID: 0}
 --- !u!4 &1141747322
 Transform:
   m_ObjectHideFlags: 0
@@ -1825,6 +1826,34 @@ PrefabInstance:
     - target: {fileID: 11400002, guid: 05a81c3d5091440058129444d28322f3, type: 3}
       propertyPath: m_Text
       value: Start Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1141747321}
+    - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: 05a81c3d5091440058129444d28322f3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 22400004, guid: 05a81c3d5091440058129444d28322f3, type: 3}
       propertyPath: m_Pivot.x

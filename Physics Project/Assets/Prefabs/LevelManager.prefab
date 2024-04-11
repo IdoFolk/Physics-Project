@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4240c417a94e93acb56b0a6bf4ea41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _id: 1
   _checkPoints:
   - {fileID: 0}
   - {fileID: 0}
+  _endLevelUI: {fileID: 0}
+  _endLevelUITitle: {fileID: 0}
+  _endLevelUITime: {fileID: 0}
+  _nextLevelButton: {fileID: 0}

@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PhysicsObject : MonoBehaviour
 {
+    public event Action<PhysicsObject> OnCollisionEnter;
+    public event Action<PhysicsObject> OnCollision;
+    public event Action<PhysicsObject> OnCollisionExit;
     // G - Gravitational constant 
     private static readonly float G = 6.674f * Mathf.Pow(10, -11);
     public SumForces Velocity { get; private set; } = new(0);
@@ -50,6 +53,7 @@ public class PhysicsObject : MonoBehaviour
         Speed += (Velocity.Value / _mass) * Time.fixedDeltaTime;
         transform.position += Speed * Time.fixedDeltaTime;
     }
+    public virtual void DestroyObject(){}
 
     public void ApplyGravityForce(int objectID, Vector3 force)
     {
@@ -65,10 +69,16 @@ public class PhysicsObject : MonoBehaviour
     public void CheckCollision(PhysicsObject otherPhysicsObject)
     {
         var distance = Vector3.Distance(Position, otherPhysicsObject.Position);
-        if (!(distance < (Collider.Radius + otherPhysicsObject.Collider.Radius) * 2)) return;
+        if (!(distance < (Collider.Radius*2 + otherPhysicsObject.Collider.Radius*2) * 2)) return;
 
         if (Collider.CheckCollision(otherPhysicsObject.Collider))
         {
+            if (!_isColliding)
+            {
+                OnCollisionEnter?.Invoke(otherPhysicsObject);
+                _isColliding = true;
+            }
+            OnCollision?.Invoke(otherPhysicsObject);
             // Calculate collision normal
             Vector3 collisionNormal = (Position - otherPhysicsObject.Position).normalized;
             if (_isMoveable) ApplyNormalForce(collisionNormal);
@@ -82,9 +92,14 @@ public class PhysicsObject : MonoBehaviour
                 if (otherPhysicsObject._isMoveable) otherPhysicsObject.transform.position -= (correctionVector * 0.5f) / _mass;
             }
         }
+        else
+        {
+            OnCollisionExit?.Invoke(otherPhysicsObject);
+            _isColliding = false;
+        }
     }
 
-    private void ApplyNormalForce(Vector3 collisionNormal)
+    protected virtual void ApplyNormalForce(Vector3 collisionNormal)
     {
         Speed = Vector3.Reflect(Speed, collisionNormal) * _bounciness;
     }

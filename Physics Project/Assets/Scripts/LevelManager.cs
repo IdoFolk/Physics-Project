@@ -1,18 +1,38 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelManager : MonoSingleton<LevelManager>
 {
+    [SerializeField] private int _id;
     [SerializeField] private List<CheckPoint> _checkPoints;
-    
+    [SerializeField] private Transform _endLevelUI;
+    [SerializeField] private TextMeshProUGUI _endLevelUITitle;
+    [SerializeField] private TextMeshProUGUI _endLevelUITime;
+    [SerializeField] private Button _nextLevelButton;
+
+    private float _timeOnLevelStart;
+    public Spaceship Spaceship { get; private set; }
+    protected override void Awake()
+    {
+        base.Awake();
+        Spaceship ??= FindObjectOfType<Spaceship>();
+    }
+
     private void Start()
     {
+        _timeOnLevelStart = Time.time;
         for (int i = 0; i < _checkPoints.Count; i++)
         {
             _checkPoints[i].ID = i;
             _checkPoints[i].OnCheckpointPassed += HandleCheckpointPassed;
             if(i != 0) _checkPoints[i].Hide();
         }
+        _endLevelUI.gameObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     private void OnDestroy()
     {
@@ -26,13 +46,30 @@ public class LevelManager : MonoSingleton<LevelManager>
         _checkPoints[checkpointID].Hide();
         
         if (_checkPoints[checkpointID].IsEndPoint) 
-            EndLevel();
+            EndLevel(true);
         else 
             _checkPoints[checkpointID+1].Show();
     }
 
-    private void EndLevel()
+    public void EndLevel(bool win)
     {
-        Debug.Log("Game Over");
+        Spaceship.ToggleControls(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _endLevelUI.gameObject.SetActive(true);
+        _endLevelUITime.text = $"Time: {Time.time - _timeOnLevelStart}";
+        if (win)
+        {
+            _endLevelUITitle.text = "Level Completed!";
+            _nextLevelButton.interactable = true;
+        }
+        else
+        {
+            _endLevelUITitle.text = "Level Failed!";
+            _nextLevelButton.interactable = false;
+        }
     }
+
+    public void OpenMenu() => SceneManager.LoadScene("Menu");
+    public void NextLevel() => GameManager.Instance.OnLevelEnd(_id);
 }

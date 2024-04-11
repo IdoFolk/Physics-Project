@@ -14,6 +14,7 @@ public class Spaceship : PhysicsObject
 
     private SpaceshipVisual _visual;
     private bool _fuelDepleted;
+    private bool _controlsActive;
 
     public float FuelTank => fuelTank;
     public bool ThrustersActive { get; private set; }
@@ -28,14 +29,14 @@ public class Spaceship : PhysicsObject
     {
         base.Start();
         Velocity.AddForce(_thrustersForce);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        _controlsActive = true;
         CurrentFuel = fuelTank;
     }
 
     private void Update()
     {
-        HandleThrusters();
+        if (_controlsActive)
+            HandleThrusters();
     }
     
     private void HandleThrusters()
@@ -62,12 +63,22 @@ public class Spaceship : PhysicsObject
         }
     }
 
+    public override void DestroyObject()
+    {
+        //explosion vfx
+        _fuelDepleted = true;
+        Invoke(nameof(LoseLevel),1);
+    }
+
     private void DepleteFuel()
     {
         //add sound for fuel exaust
         _visual.ToggleAllThrusterVisuals(false);
         _fuelDepleted = true;
+        Invoke(nameof(LoseLevel),3);
     }
+
+    private void LoseLevel() => LevelManager.Instance.EndLevel(false);
 
     private void RotationalThrusters()
     {
@@ -96,6 +107,11 @@ public class Spaceship : PhysicsObject
         else ThrustersActive = false;
         _thrustersForce.Value = thrusterSpeed * (transform.forward * forwardAxis + transform.right * rightAxis + transform.up * upAxis);
         
+    }
+
+    public void ToggleControls(bool state)
+    {
+        _controlsActive = state;
     }
     private void OnDrawGizmos()
     {
