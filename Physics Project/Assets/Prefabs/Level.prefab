@@ -527,6 +527,11 @@ PrefabInstance:
       objectReference: {fileID: 5885253162397975827}
     - target: {fileID: 2238460980322975281, guid: a672e5097e11ece42b82dd30bd487cd0,
         type: 3}
+      propertyPath: _audioSource
+      value: 
+      objectReference: {fileID: 3351704837939351612}
+    - target: {fileID: 2238460980322975281, guid: a672e5097e11ece42b82dd30bd487cd0,
+        type: 3}
       propertyPath: _endLevelUITime
       value: 
       objectReference: {fileID: 9026121947660416620}
@@ -598,7 +603,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5158841327037245200, guid: a672e5097e11ece42b82dd30bd487cd0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3351704837939351612}
   m_SourcePrefab: {fileID: 100100000, guid: a672e5097e11ece42b82dd30bd487cd0, type: 3}
 --- !u!4 &2124203170081841907 stripped
 Transform:
@@ -606,13 +615,116 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7637362947897091244}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3344696746567140284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5158841327037245200, guid: a672e5097e11ece42b82dd30bd487cd0,
+    type: 3}
+  m_PrefabInstance: {fileID: 7637362947897091244}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &3351704837939351612
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3344696746567140284}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 5288771131382640274, guid: 2844526ae7bd2454c88c3767faf80ce1,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 7f199f11f85fd184ab2cd54061624eef, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &8569718164523047581 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2238460980322975281, guid: a672e5097e11ece42b82dd30bd487cd0,
     type: 3}
   m_PrefabInstance: {fileID: 7637362947897091244}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3344696746567140284}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db4240c417a94e93acb56b0a6bf4ea41, type: 3}

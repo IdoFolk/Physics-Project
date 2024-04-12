@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     [SerializeField] private TextMeshProUGUI _endLevelUITitle;
     [SerializeField] private TextMeshProUGUI _endLevelUITime;
     [SerializeField] private Button _nextLevelButton;
+    [SerializeField] private AudioSource _audioSource;
 
     private float _timeOnLevelStart;
     public Spaceship Spaceship { get; private set; }
@@ -44,6 +46,7 @@ public class LevelManager : MonoSingleton<LevelManager>
     private void HandleCheckpointPassed(int checkpointID)
     {
         _checkPoints[checkpointID].Hide();
+        _audioSource.Play();
         
         if (_checkPoints[checkpointID].IsEndPoint) 
             EndLevel(true);
@@ -57,7 +60,11 @@ public class LevelManager : MonoSingleton<LevelManager>
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         _endLevelUI.gameObject.SetActive(true);
-        _endLevelUITime.text = $"Time: {Time.time - _timeOnLevelStart}";
+        
+        double mainGameTimerd = (double)Time.time - _timeOnLevelStart;
+        TimeSpan time = TimeSpan.FromSeconds(mainGameTimerd);
+        string displayTime = time.ToString(@"mm\:ss");
+        _endLevelUITime.text = $"Time: {displayTime}";
         if (win)
         {
             _endLevelUITitle.text = "Level Completed!";

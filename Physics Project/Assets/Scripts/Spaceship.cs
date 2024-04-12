@@ -19,6 +19,7 @@ public class Spaceship : PhysicsObject
     public float FuelTank => fuelTank;
     public bool ThrustersActive { get; private set; }
     public float CurrentFuel { get; private set; }
+    private bool _isDestroyed;
     protected override void Awake()
     {
         base.Awake();
@@ -31,6 +32,7 @@ public class Spaceship : PhysicsObject
         Velocity.AddForce(_thrustersForce);
         _controlsActive = true;
         CurrentFuel = fuelTank;
+        _isDestroyed = false;
     }
 
     private void Update()
@@ -65,8 +67,10 @@ public class Spaceship : PhysicsObject
 
     public override void DestroyObject()
     {
+        if (_isDestroyed) return;
         //explosion vfx
         _fuelDepleted = true;
+        _isDestroyed = true;
         Invoke(nameof(LoseLevel),1);
     }
 

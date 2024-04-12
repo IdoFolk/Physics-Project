@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpaceshipVisual : MonoBehaviour
@@ -11,7 +12,9 @@ public class SpaceshipVisual : MonoBehaviour
     [SerializeField] private ParticleSystem backwardThrusterParticleSystem;
     [SerializeField] private ParticleSystem upThrusterParticleSystem;
     [SerializeField] private ParticleSystem downThrusterParticleSystem;
+    [SerializeField] private AudioSource _audioSource;
     private Spaceship _owner;
+    private bool[] _thrustersActive = new bool[6];
 
     private void Awake()
     {
@@ -94,22 +97,38 @@ public class SpaceshipVisual : MonoBehaviour
         {
             case Direction.Up:
                 upThrusterParticleSystem.gameObject.SetActive(state);
+                _thrustersActive[0] = state;
                 break;
             case Direction.Down:
                 downThrusterParticleSystem.gameObject.SetActive(state);
+                _thrustersActive[1] = state;
                 break;
             case Direction.Left:
                 leftThrusterParticleSystem.gameObject.SetActive(state);
+                _thrustersActive[2] = state;
                 break;
             case Direction.Right:
                 rightThrusterParticleSystem.gameObject.SetActive(state);
+                _thrustersActive[3] = state;
                 break;
             case Direction.Forward:
                 forwardThrusterParticleSystem.gameObject.SetActive(state);
+                _thrustersActive[4] = state;
                 break;
             case Direction.Backward:
                 backwardThrusterParticleSystem.gameObject.SetActive(state);
+                _thrustersActive[5] = state;
                 break;
+        }
+        if (_thrustersActive.Contains(true))
+        {
+            if(!_audioSource.isPlaying)
+                _audioSource.Play();
+        }
+        else
+        {
+            if(_audioSource.isPlaying)
+                _audioSource.Stop();
         }
     }
 
