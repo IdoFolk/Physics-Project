@@ -106,19 +106,18 @@ public class PhysicsObject : MonoBehaviour
 
     private void SetInitialOrbitalSpeed(PhysicsObject planet)
     {
-        // Calculate the distance between the satellite and planet
+        // Calculate the distance between the bodies
         float r = Vector3.Distance(planet.Position, Position);
 
         // Calculate the orbital speed needed
         float v = Mathf.Sqrt(PhysicsManager.Instance.GravityScale * planet.Mass / r);
 
-        // Get direction from satellite to planet
+        // Get direction 
         Vector3 direction = (planet.Position - Position).normalized;
 
-        // Rotate direction 90 degrees around Y axis to obtain a tangential direction (perpendicular to original direction):
+        // Rotate direction 90 degrees around Y axis
         Vector3 tangentialDirection = Quaternion.Euler(0, 90, 0) * direction;
-
-        // Set initial speed of satellite
+        
         Speed = tangentialDirection * v;
     }
 

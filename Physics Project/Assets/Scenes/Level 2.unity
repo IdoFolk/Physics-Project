@@ -290,6 +290,7 @@ MonoBehaviour:
     Radius: 0
   _penetrationTolerance: 0
   _rotateSpeed: -0.01
+  _destroyOnImpact: 0
 --- !u!4 &431673593 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4693579709242440, guid: f9a741bb8762344c6a2a9cb4217ef728,
@@ -493,6 +494,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _rotateSpeed
       value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1791189545973454551, guid: 300f80108a63f48618cb4a1c8b8c1e86,
+        type: 3}
+      propertyPath: _colliderConfig.Radius
+      value: 172.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
